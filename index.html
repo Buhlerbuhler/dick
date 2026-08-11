@@ -660,7 +660,66 @@
 .photo-pair {
   margin: clamp(1rem, 3vw, 2rem) 0;
 }
-  </style>
+  
+/* Family tree archive link */
+.tree-link {
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid var(--line);
+  border-top: 8px solid var(--gold);
+  background: transparent;
+  color: var(--ink);
+  padding: .9rem 1rem;
+  display: grid;
+  grid-template-columns: 3.3rem 1fr;
+  gap: .75rem;
+  align-items: start;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  min-height: 64px;
+  text-decoration: none;
+}
+
+.tree-link span {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 900;
+  font-size: 1.45rem;
+  line-height: .95;
+  color: var(--gold);
+}
+
+.tree-link b {
+  font-size: .86rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.tree-link:hover,
+.tree-link:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: 0;
+}
+
+.tree-link:hover span,
+.tree-link:focus-visible span {
+  color: inherit;
+}
+
+@media (max-width: 900px) {
+  .tree-link {
+    grid-template-columns: 2.7rem 1fr;
+  }
+}
+
+@media print {
+  .tree-link {
+    display: none;
+  }
+}
+
+</style>
 </head>
 <body>
   <main class="site-shell">
@@ -678,7 +737,7 @@
 
     <section class="book-interface" id="story">
       <nav class="tabs" aria-label="Chapter tabs">
-        <div class="tabs-header"><span>Index</span><span>01–15</span></div>
+        <div class="tabs-header"><span>Index</span><span>01–15 + archive</span></div>
         <button class="tab is-active" data-target="chapter-1" aria-selected="true"><span>01</span><b>I Heard …</b></button>
 <button class="tab" data-target="chapter-2" aria-selected="false"><span>02</span><b>Growing Up on the Farm</b></button>
 <button class="tab" data-target="chapter-3" aria-selected="false"><span>03</span><b>Boats, Swimming &amp; Trouble</b></button>
@@ -694,6 +753,7 @@
 <button class="tab" data-target="chapter-13" aria-selected="false"><span>13</span><b>Fishing Stories</b></button>
 <button class="tab" data-target="chapter-14" aria-selected="false"><span>14</span><b>Elizabeth in the Picture</b></button>
 <button class="tab" data-target="chapter-15" aria-selected="false"><span>15</span><b>Obituary</b></button>
+<a class="tree-link" href="family-tree.html"><span>↟</span><b>Family Tree</b></a>
       </nav>
       <div class="reading-stage">
         <article class="chapter-panel is-active" id="chapter-1" data-panel>
@@ -1098,7 +1158,7 @@
 </section>
       </div>
     </article>
-      </div>
+</div>
     </section>
 
     <footer class="site-footer"><span>Dick Buhler / Recollections</span><span>1939-2026</span></footer>
@@ -1126,6 +1186,7 @@
 
     // Build mobile-only "Next Chapter" buttons from the existing tab order.
     panels.forEach((panel, index) => {
+      if (!panel.id.startsWith('chapter-')) return;
       const nextTab = tabs[index + 1];
       if (!nextTab) return;
 

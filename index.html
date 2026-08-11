@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dick Buhler | Recollections</title>
+  <style>
+    :root {
+      --paper: #E5E7E1;
+      --paper-deep: #B8B6AD;
+      --ink: #1E211F;
+      --muted: #666C67;
+      --red: #9C6958;
+      --gold: #31463B;
+      --lake: #496773;
+      --lichen: #858B67;
+      --line: #1E211F;
+      --shadow: rgba(30,33,31,.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(49,70,59,.18), transparent 28rem),
+        radial-gradient(circle at 86% 18%, rgba(73,103,115,.15), transparent 22rem),
+        linear-gradient(135deg, #C7C9C1 0%, var(--paper-deep) 48%, #A6AAA4 100%);
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image:
+        repeating-linear-gradient(0deg, transparent 0 4px, rgba(24,23,19,.05) 4px 5px),
+        repeating-linear-gradient(90deg, transparent 0 13px, rgba(24,23,19,.03) 13px 14px);
+      mix-blend-mode: multiply;
+      z-index: 20;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-shell {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      border-left: 2px solid var(--line);
+      border-right: 2px solid var(--line);
+      min-height: 100vh;
+      background: var(--paper);
+      box-shadow: 0 0 80px var(--shadow);
+    }
+
+    .intro {
+      min-height: 38vh;
+      padding: clamp(1.25rem, 5vw, 4rem);
+      border-bottom: 2px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 1rem;
+      background: rgba(229,231,225,.72);
+    }
+
+    .intro-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 72rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: .82rem;
+      color: var(--muted);
+      border-bottom: 2px solid var(--line);
+      padding-bottom: .7rem;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(4rem, 14vw, 12rem);
+      line-height: .8;
+      letter-spacing: -.1em;
+      margin: 0;
+      text-transform: uppercase;
+      font-weight: 900;
+      max-width: 72rem;
+    }
+
+    .intro p {
+      margin: 0;
+      max-width: 44rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.15rem, 2vw, 1.75rem);
+      line-height: 1.25;
+    }
+
+    .enter-button {
+      width: fit-content;
+      border: 2px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: .75rem .95rem;
+      font-weight: 800;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .enter-button:hover,
+    .enter-button:focus-visible {
+      background: var(--ink);
+      color: var(--paper);
+      outline: 0;
+    }
+
+    .book-interface {
+      display: grid;
+      grid-template-columns: minmax(210px, 320px) 1fr;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .tabs {
+      border-right: 2px solid var(--line);
+      background: rgba(49,70,59,.055);
+      position: sticky;
+      top: 0;
+      align-self: start;
+      max-height: 100vh;
+      overflow: auto;
+    }
+
+    .tabs-header {
+      padding: 1rem;
+      border-bottom: 2px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .tab {
+      width: 100%;
+      border: 0;
+      border-bottom: 2px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      padding: .9rem 1rem;
+      display: grid;
+      grid-template-columns: 3.3rem 1fr;
+      gap: .75rem;
+      align-items: start;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+      min-height: 64px;
+    }
+
+    .tab span {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 900;
+      font-size: 1.45rem;
+      line-height: .95;
+    }
+
+    .tab b {
+      font-size: .86rem;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+
+    .tab:hover,
+    .tab:focus-visible,
+    .tab.is-active {
+      background: var(--ink);
+      color: var(--paper);
+      outline: 0;
+    }
+
+    .reading-stage {
+      min-height: 70vh;
+      position: relative;
+      background: var(--paper);
+    }
+
+    .chapter-panel {
+      display: none;
+      animation: lift .25s ease;
+    }
+
+    .chapter-panel.is-active {
+      display: block;
+    }
+
+    @keyframes lift {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-meta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      padding: .8rem 1rem;
+      border-bottom: 2px solid var(--line);
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .panel-meta p {
+      margin: 0;
+    }
+
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: minmax(95px, 160px) minmax(0, 1fr);
+    }
+
+    .folio {
+      border-right: 2px solid var(--line);
+      padding: 1rem;
+      min-height: 65vh;
+      position: sticky;
+      top: 0;
+      align-self: start;
+    }
+
+    .folio small {
+      display: block;
+      margin-top: 3rem;
+      margin-left: .25rem;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg) translateY(-.5rem);
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: .08em;
+      font-size: .72rem;
+    }
+
+    .chapter-copy {
+      padding: clamp(1rem, 4vw, 4rem);
+      max-width: 980px;
+      background: var(--paper);
+    }
+
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--red);
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: .06em;
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 8vw, 8rem);
+      line-height: .82;
+      margin: 0 0 2rem;
+      letter-spacing: -.08em;
+      text-transform: uppercase;
+    }
+
+    .body-copy {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.12rem, 1.55vw, 1.42rem);
+      line-height: 1.63;
+      max-width: 72ch;
+    }
+
+    .body-copy p {
+      margin: 0 0 1.1rem;
+    }
+
+    .body-copy p:first-child::first-letter {
+      font-size: 4.6rem;
+      line-height: .8;
+      float: left;
+      padding: .14rem .45rem 0 0;
+      font-weight: 900;
+      color: var(--red);
+    }
+
+
+    .body-copy h4 {
+      margin: 2rem 0 .5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      text-transform: uppercase;
+      font-size: .98rem;
+      border-top: 2px solid var(--line);
+      padding-top: .8rem;
+      letter-spacing: .05em;
+    }
+
+    .body-copy li {
+      margin: .15rem 0 .35rem 1rem;
+      padding-left: .45rem;
+    }
+
+    .site-footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      padding: 1rem;
+      text-transform: uppercase;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+
+    @media (max-width: 900px) {
+      .site-shell {
+        border-left: 0;
+        border-right: 0;
+      }
+
+      .intro {
+        min-height: 30vh;
+      }
+
+      .intro-meta {
+        flex-direction: column;
+      }
+
+      .book-interface {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        position: relative;
+        max-height: none;
+        border-right: 0;
+      }
+
+      .tab {
+        grid-template-columns: 2.7rem 1fr;
+      }
+
+      .chapter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .folio {
+        min-height: auto;
+        position: relative;
+        border-right: 0;
+        border-bottom: 2px solid var(--line);
+      }
+
+      .folio small {
+        writing-mode: horizontal-tb;
+        transform: none;
+        margin-top: 1.4rem;
+      }
+    }
+
+    @media print {
+      .tabs, .enter-button {
+        display: none;
+      }
+
+      .book-interface, .chapter-grid {
+        display: block;
+      }
+
+      .chapter-panel {
+        display: block !important;
+        break-before: page;
+      }
+
+      .folio {
+        border: 0;
+        min-height: auto;
+      }
+    }
+  
+
+    .intro-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(230px, 350px);
+      gap: clamp(1.5rem, 5vw, 4rem);
+      align-items: end;
+    }
+
+    .intro-copy { display: flex; flex-direction: column; gap: 1rem; }
+
+    .hero-photo,
+    .photo-placeholder {
+      border: 2px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(67,87,71,.09), rgba(164,86,56,.07)),
+        var(--paper-deep);
+      min-height: 280px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-photo::after,
+    .photo-placeholder::after {
+      content: attr(data-label);
+      position: absolute;
+      inset: auto .8rem .8rem .8rem;
+      border-top: 2px solid var(--line);
+      padding-top: .55rem;
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .hero-photo::before,
+    .photo-placeholder::before {
+      content: "PHOTO";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 6vw, 4.6rem);
+      color: rgba(25,26,23,.16);
+      letter-spacing: -.05em;
+    }
+
+    .photo-placeholder.is-wide {
+      min-height: 340px;
+      margin: 2.2rem 0;
+    }
+
+    .photo-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .photo-pair .photo-placeholder { min-height: 260px; }
+
+    .memory-quote {
+      margin: 2rem 0;
+      border-left: 7px solid var(--red);
+      padding: .35rem 0 .35rem 1.1rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.35rem, 2.3vw, 2rem);
+      line-height: 1.15;
+      font-style: italic;
+    }
+
+    .section-head {
+      margin: 2.6rem 0 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--line);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.55rem, 3vw, 2.5rem);
+      line-height: 1;
+    }
+
+    .chapter-copy .body-copy > p:first-child:first-letter {
+      float: left;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 4.4rem;
+      line-height: .72;
+      padding: .15rem .48rem 0 0;
+      font-weight: 900;
+      color: var(--gold);
+    }
+    .eyebrow { color: var(--red); }
+
+    .chapter-panel[data-photo="true"] .folio-photo {
+      border: 2px solid var(--line);
+      min-height: 210px;
+      margin-bottom: .8rem;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 1rem;
+      background: rgba(49,70,59,.08);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .editor-note {
+      border: 2px solid var(--line);
+      padding: 1rem;
+      background: rgba(156,105,88,.07);
+      margin: 1.4rem 0 2rem;
+      font-size: .9rem;
+    }
+
+    @media (max-width: 860px) {
+      .intro-layout { grid-template-columns: 1fr; }
+      .hero-photo { min-height: 220px; }
+      .photo-pair { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+  <main class="site-shell">
+    <section class="intro" id="top">
+      <div class="intro-meta"><span>Family memoir / Manitoba</span><span>Written 2020–2022</span></div>
+      <div class="intro-layout">
+        <div class="intro-copy">
+          <h1>Dick<br>Buhler</h1>
+          <p><strong>Recollections.</strong> Stories of home, family, faith, and the outdoors.</p>
+          <button class="enter-button" data-jump>Open the recollections ↓</button>
+        </div>
+        <div class="hero-photo" data-label="Hero photo: portrait of Dick Buhler"></div>
+      </div>
+    </section>
+
+    <section class="book-interface" id="story">
+      <nav class="tabs" aria-label="Chapter tabs">
+        <div class="tabs-header"><span>Index</span><span>01–14</span></div>
+        <button class="tab is-active" data-target="chapter-1" aria-selected="true"><span>01</span><b>I Heard …</b></button>
+<button class="tab" data-target="chapter-2" aria-selected="false"><span>02</span><b>Growing Up on the Farm</b></button>
+<button class="tab" data-target="chapter-3" aria-selected="false"><span>03</span><b>Boats, Swimming &amp; Trouble</b></button>
+<button class="tab" data-target="chapter-4" aria-selected="false"><span>04</span><b>My Faith Journey</b></button>
+<button class="tab" data-target="chapter-5" aria-selected="false"><span>05</span><b>Esther in the Picture and in My Life</b></button>
+<button class="tab" data-target="chapter-6" aria-selected="false"><span>06</span><b>Building a Life Together</b></button>
+<button class="tab" data-target="chapter-7" aria-selected="false"><span>07</span><b>Our Children</b></button>
+<button class="tab" data-target="chapter-8" aria-selected="false"><span>08</span><b>Esther, Mother and Grandmother</b></button>
+<button class="tab" data-target="chapter-9" aria-selected="false"><span>09</span><b>Ecuador</b></button>
+<button class="tab" data-target="chapter-10" aria-selected="false"><span>10</span><b>Jamaica and Other Travels</b></button>
+<button class="tab" data-target="chapter-11" aria-selected="false"><span>11</span><b>Mennonite Disaster Service</b></button>
+<button class="tab" data-target="chapter-12" aria-selected="false"><span>12</span><b>Hunting Stories</b></button>
+<button class="tab" data-target="chapter-13" aria-selected="false"><span>13</span><b>Fishing Stories</b></button>
+<button class="tab" data-target="chapter-14" aria-selected="false"><span>14</span><b>Elizabeth in the Picture</b></button>
+<button class="tab" data-target="chapter-15" aria-selected="false"><span>15</span><b>Obituary</b></button>
+      </nav>
+      <div class="reading-stage">
+        <article class="chapter-panel is-active" id="chapter-1" data-panel>
+      <div class="panel-meta"><p>CHAPTER 1</p><p>Family / Saskatchewan / Arden</p></div>
+      <div class="chapter-grid">
+        <aside class="folio">
+          <small>Family / Saskatchewan / Arden</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Before Dick could remember</p><h2>I Heard …</h2><div class="body-copy">
+<p>Mum &amp; Dad and six children moved from Manitoba to Saskatchewan. I suppose adventure and opportunity were knocking. They moved to a small house in brush country in northern Saskatchewan.</p>
+<p>For income Dad sold firewood and even wild berries to support their ever growing family. To clean the blueberries, he placed a sheet on two sticks, then rolled the berries down the sheet, catching most of the leaves, twigs etc. He even made berry pickers from knitting needles and a tin can which worked very well. I made a few myself which works very well.</p>
+<p>It was a hard life. To supplement the income or food supply they also caught partridges using a long stick and wire snare. The dog would chase the birds and bark at them. The bird would usually land in a tree out of reach of the dog. The dog would bark and the bird would watch the dog and you can guess the rest.</p>
+<p>I’ve tried it. It works very well. Try it sometime.</p>
+<p>Rabbits were also a good meat supply. It tastes like chicken, at least when you’re hungry.</p>
+<p>Dad had left for town with a load of firewood to sell. The means of transportation was a wagon, the motor was one horse and one ox. The only dog they had went with Dad.</p>
+<p>Mum hears the only calf they had bawling and sees a bear chasing the calf. They had only one cow and calf. Mum calls for the dog, but the bear looks up and comes to the house, gets up on its hind legs, looks into the window and breaks the window.</p>
+<p>What to do?</p>
+<p>John, the second oldest child, wants to chase the bear with Dad’s belt. Mum, bless her heart, says no to John, gets on her knees and prays.</p>
+<p>The bear gets down and leaves.</p>
+<p>I believe in response to Mother’s prayer, God put His hand on the bear and tells the bear to get its dinner somewhere else. The Lord spared the family and even the cow and calf.</p>
+<div class="memory-quote">A very good choice, Mum.</div>
+<h3 class="section-head">About the move to Manitoba …</h3>
+<p>They moved by train taking everything they owned. The family, including Mum, about to have a baby, me, the cattle, horses, furniture and equipment.</p>
+<p>They arrived at Arden, Manitoba. There was the land, but no house.</p>
+<p>They moved with another family into a vacant one room school. The school building had a front porch, a classroom area and back porch or a coal shed.</p>
+<p>The Born family moved into the back porch. My Mum &amp; Dad moved into the front porch where just a little bit later, I would be born. The children lived in the classroom area. Cooking etc., was also done in this area.</p>
+<p>Dad just about immediately started building our house. Guess what … a sod house in which we lived for quite a while. It must have been quite adequate, maybe my Mother would have had a different opinion. Two more children were added to our family during this time.</p>
+<p>A very sad event happened about this time. My oldest brother, Jacob, went to work for a local farmer. One evening he didn’t come home for supper. They found his clothes at the dugout, a watering hole for livestock. Dad finally found his body. The cause of death was never determined. It might have been cramps.</p>
+<p>Dugouts are often not very friendly for swimming. I should know, I was able to rescue a boy when he couldn’t find footing, having went in just a little too far.</p>
+<p>My Mother, dear Mother, couldn’t even go to Jacob’s funeral. I was the culprit, I was either just born, or about to be.</p>
+<p>I heard that Mother just about didn’t make it, having me. The move, train ride, and Jacob’s death were too much for Mum. What a brave, strong woman you were.</p>
+<h3 class="section-head">The next few years …</h3>
+<p>I was too small to remember so I’m not sure of the following few things if they were real or not. I heard and saw some commotion one night, a strange lady was in the house. I think it was the night my sister, Susie, was born.</p>
+<p>I remember one morning a muskrat coming into the house and caused quite a stir. I also think I remember Mum sweeping the earth floor. She often also swept the dirt entries and dirt sidewalks.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-2" data-panel>
+      <div class="panel-meta"><p>CHAPTER 2</p><p>Home / chores / garden</p></div>
+      <div class="chapter-grid">
+        <aside class="folio">
+          <small>Home / chores / garden</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Farm life and childhood work</p><h2>Growing Up on the Farm</h2><div class="body-copy">
+<h3 class="section-head">The new house …</h3>
+<p>While building a cat got caught between the 2x4 studs, somehow we were able to rescue it.</p>
+<p>The house was a two storey house. The main floor was wide open with one corner curtained off for Mum &amp; Dad’s bedroom. A stairway to the second floor was approximately in the center. On the second floor, one end was the girls’ bedroom, and the other the boys’ room. The bathroom, toilet was outside. I remember three of us sleeping across the bed at one time.</p>
+<p>The heating source was the wood cooking stove and tin wood stove. We didn’t have electricity till much later. My Dad, bless his heart, never let the fire go out at night. He kept it going all night. I don’t remember it ever getting cold in the house.</p>
+<p>The bed mattress was a large cloth bag which we filled with hay. I’m sure this was a lot cheaper than mattresses these days. One thing we tried to do was use softer hay without thistle in it.</p>
+<p>The firewood method was filling enough firewood to last approximately one year. The trees were felled, sledding it home, placing them in a large pile approximately 4’ high. Help was needed to cut the trees into stove length and placed in a large pile, then splitting them. I really enjoyed splitting, especially when it was green and quite cold.</p>
+<div class="memory-quote">Don’t split when you are on your knees.</div>
+<p>I dropped the axe into my knee cap which was a painful experience.</p>
+<p>Our footwear was Mum’s knitted socks, made of sheep’s wool, and rubber overshoes. The wool was processed, pulling and cleaning, and made into yarn. I’ve helped but the knitting and mending was all Mum’s doing. I would like to ask her if she ever slept.</p>
+<h3 class="section-head">Work and earning a little money …</h3>
+<p>As a young boy, my brothers and I, besides milking, feeding the livestock and chickens, cleaning the barns etc., did trapping, snaring rabbits, and hunting. I don’t think we ever left the house without a small .22 rifle.</p>
+<p>We trapped weasels, squirrels, and sometimes mink. My Dad caught a mink which was a big deal. We caught gophers, crows, magpies and even young coyotes out of their den. There was a bounty for all of the above. The concern was the effect on the duck population.</p>
+<p>Dad never gave us money but neither did we have to give money to him for what we earned. He did pay us sometimes for picking potato bugs.</p>
+<p>We skinned and stretched our furs in our house, thank-you Mum for letting us do that. You were such a sweetheart.</p>
+<h3 class="section-head">Mum’s garden …</h3>
+<p>My Mother had a very beautiful flower garden fenced in with stucco wire so that the unwanted didn’t get in and eat. Maybe that is where I got my love for flowers from Mother’s garden.</p>
+<p>Mum &amp; Dad had a big, very big, vegetable garden and also a fruit garden with raspberries, strawberries, different kinds of plums, apples, currants, gooseberries etc.</p>
+<p>A big garden is a lot of work, planting, weeding, cultivating. I’m riding the horse pulling the cultivator, Dad is holding the cultivator. Later we used the same method for hilling the potatoes, having placed a board on each side of the cultivator.</p>
+<p>Harvesting the garden was a big and hard job. One year my sister, Eva, age 14, just a wonderful girl, was helping and she got so tired. Later she passed away with scarlet fever. I still miss her.</p>
+<p>All this time we’re getting older. Helping Dad, cleaning the barns, feeding the animals, and making hay. The method of making hay is too involved to write down.</p>
+<div class="memory-quote">Why don’t you ask me over a cup of Coke or coffee, and I’ll tell you all about it.</div>
+<p>The big jobs were stoking, threshing, I liked that, picking stones and tree roots, not so much. Dad hired a bulldozer to push down the trees, then push them into rows, where we and neighbours came to get their supply of firewood.</p>
+<p>The roots didn’t all come out so that’s why we had to clean up so we could do seeding of all kinds of grain, flax, and even buckwheat. One year a neighbour of ours asked us were we growing buckwheat. He said “their honey stank like buckwheat.” He lived about two miles away … silly bees, why go so far away?</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-3" data-panel>
+      <div class="panel-meta"><p>CHAPTER 3</p><p>Boat / pond / swimming</p></div>
+      <div class="chapter-grid">
+        <aside class="folio">
+          <small>Boat / pond / swimming</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">A few early adventures</p><h2>Boats, Swimming &amp; Trouble</h2><div class="body-copy">
+<p>My Dad and I built a boat out of boards, shiplap. It worked quite well, we had a lot of fun with it. One essential was a hauling bucket. I sure wished we would have had caulking then.</p>
+<h3 class="section-head">Next, let me tell you a few boat stories …</h3>
+<p>We had a pond, it was quite long, maybe ½ mile, but not very wide. In it were ducks, muskrats, mink etc.</p>
+<p>The water to the area in spring sometimes came to us in large volumes. I had placed the boat on shore, but during the night the water had come up. The boat had floated quite a way from shore and frozen in. I needed to get the boat … how?</p>
+<p>An idea, a bad one. I had skis at home made out of a toboggan. Maybe I could ski up to the boat and bring it back. It didn’t work that way … half way there, you guessed it, and the ice broke.</p>
+<p>I decided I’m wet already, I’ll go and get the boat but when I got there, I was so cold. I knew that I had to get home. I went back to shore with some difficulty. Then I ran back to the house. My lungs were quite sore, my clothes and shoes were frozen. It ended quite okay.</p>
+<p>Second experience, I was trapping muskrats about 1 ½ miles away from home. I was using the boat. The water had come up about 1-2 feet during the night. I only had handmade oars. I was using one paddle to push me along, it got stuck in a hole so I lost it. I still had one, I’m okay, so I thought.</p>
+<p>I used the paddle to break ice, then it broke. I’m still okay? Now I had a piece of handle about 2-3 feet long. I had to get out of the reeds and into open water. Fortunately the wind was blowing in the right direction. After floating and rowing with the stick, I made it to shore. I left the boat and walked home.</p>
+<div class="memory-quote">Maybe we shouldn’t have built the boat.</div>
+<h3 class="section-head">Swimming …</h3>
+<p>When quite young, we had a good place to swim, a ditch with about 3-4’ of clean water. A number of boys, myself being one of them, were having a good time when, we were in the buff, I don’t think they even had bathing trunks or shorts then, or at least we didn’t know about them, a number of girls came along the road.</p>
+<p>You guessed it, they took our clothes and ran.</p>
+<p>It sounds funny but it wasn’t. After much yelling and threatening, they brought the clothes back. I guess they had their fun. I can’t quite imagine walking home for about 2 ½ miles without clothes.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-4" data-panel>
+      <div class="panel-meta"><p>CHAPTER 4</p><p>Bible / school / church</p></div>
+      <div class="chapter-grid">
+        <aside class="folio">
+          <small>Bible / school / church</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Faith from childhood onward</p><h2>My Faith Journey</h2><div class="body-copy">
+<p>My Dad had a time of Bible reading and prayer, just about every morning, no matter who was over. At a certain time he would call everyone in the house to join in this together.</p>
+<p>There was Sunday school, Vacation Bible school, like a day camp, also courses that were offered on radio. I went to camp, to go free, we were offered it free if we would memorize 100 verses of scripture. I went free. Those verses, for the most part, have been a good reminder, and truths that have been very helpful over the years.</p>
+<p>We also had evangelistic crusades. A big canvas tent was set up and an evangelist came to bring the good news about Jesus’ finished work on the cross, so that our sins could be forgiven and that we could live for Him, and be assured of a place in Heaven with Him. He would also warn those that didn’t accept Him as Saviour, their fate would be awful.</p>
+<p>I thought I had made that decision earlier but to make sure I got down beside my bed and prayed “if I haven’t already made that decision, I make it now.” I know He heard my prayer at age 12. Thank-you Jesus!</p>
+<div class="memory-quote">“But as many as received him, to them gave he power to become the sons of God, even to them that believe on his name.” John 1:12, KJV</div>
+<h3 class="section-head">Bible school …</h3>
+<p>I needed quite a bit of help with assurance of salvation. Wanted to go to Bible school, and I did. The studies have been so helpful. The Bible school days were such a blast, what we learned, friends we got, playing tackle football without any protection.</p>
+<p>However, dating was not allowed, so I tutored Esther, especially in grade 10. I really did tutor Esther. That was sort of a date.</p>
+<p>I would take two more years of Bible school. One year Esther took Bible school as well. My thinking was if my friends could borrow money for cars etc., I could for schooling, and that is what I did.</p>
+<h3 class="section-head">Church life …</h3>
+<p>Esther had discovered a church in Winnipeg, liked the Pastor and spoke highly of the church, Gospel Mennonite Church. After we married, we kept on going there. One day the Pastor, Ben Sawatzky, asked me if I would be willing to become a deacon of the church.</p>
+<p>I made excuses, something like Moses did, I’m too young, people don’t know us. Finally we accepted and were voted in.</p>
+<p>Life became very busy for Esther and myself. I was doing contracting for about 40-45 years, alongside being involved in the life of the church. Oh, I almost forgot, we were also raising a family. Camping, hunting, and fishing were part of our lives.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-5" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 5</p><p>Courtship / wedding / love</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+          <small>Courtship / wedding / love</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Meeting Esther</p><h2>Esther in the Picture and in My Life</h2><div class="body-copy">
+<p>We went to the same school, the same church, young people’s meetings, and other similar activities like playing softball and other games.</p>
+<p>I knew that she was a nice girl and I had respect for her. One day as we were walking home from school, she and a few other girls were walking behind us. That as I remember was the first time I saw her differently, maybe I was growing up. I saw a beautiful, attractive girl.</p>
+<p>I think this was grade nine that we took together. It was partly correspondence, and the teacher helped us a little.</p>
+<p>I was determined to date her. One day or evening I decided I’ll go. Dating and other things were different then … no phone, no events to take her too. So I went to her house and guess what, no one was home. What a relief but I was determined that next time I was going to be more okay.</p>
+<p>It was Christmas season the first time with her. When I got there they were all there, her Dad &amp; Mum, and two sisters. Somehow I got it out that I wanted to see Esther and if she was okay about it. Somehow she gave me the “I’d like that.”</p>
+<p>It wasn’t the most romantic evening but it was the beginning of a wonderful relationship, not only with her but also with her family.</p>
+<div class="photo-pair"><div class="photo-placeholder" data-label="Suggested: Dick and Esther, young"></div><div class="photo-placeholder" data-label="Suggested: courtship or Bible school"></div></div>
+<p>We had many good times together. I also helped with haying, driving tractor, fencing, putting a new roof on their house, including renovations, building new cabinets in their home and helped butchering. I kind of thought that I was rescuing her from a hard life. But maybe being married to me might have been harder?</p>
+<p>We dated for a year before we kissed, but after that we might have kissed a few more times. We went for walks, talked and planned. We almost always had a time of prayer in our times together, sure helped us to keep focus.</p>
+<p>I would go to Bible school for one year then take grade 10 at Steinbach Bible school, which we did together. Then one more year of Bible school, marriage, and whatever comes with it then.</p>
+<h3 class="section-head">Wedding and honeymoon etc. …</h3>
+<p>I asked Esther’s Father if I could marry Esther. All he said “we’ll talk about it later.” Well we never did. I thought once was enough. He didn’t throw me out so I assumed it’s a done deal.</p>
+<p>We dated for approximately four years. I was sure she was the right person but we both were quite young. My Mum was happy about our relationship but said, “I wish that they had met each other when they were older.” I didn’t think of myself as young then. I think people matured sooner those days than now. Ha.</p>
+<p>When we married, I was barely 21 and she was almost 20.</p>
+<p>Wedding … what an exhilarating day. Such character and beauty.</p>
+<div class="photo-placeholder is-wide" data-label="Suggested: Dick and Esther wedding photo, Arden, Manitoba"></div>
+<p>We got married in a little church in Arden, Manitoba. Pastor B.W. Sawatzky officiated. We had a song leader, Menno Hamm, and his brother, Elmer as M.C. Esther’s sister, Marion, was bridesmaid. My brother, Bill, was best man.</p>
+<p>The service began and everybody is standing. In walks the bridesmaid and best man. The M.C. gets everybody to sit down. A flurry took place … no, no, “the bridal couple are not in yet.” They just about married the wrong couple. Everything turned out just about right.</p>
+<p>I do wish I could remember something of what our Pastor said. I wish so much that all of you, especially my family, could marry someone as good as Esther.</p>
+<p>Everything went well, still being overwhelmed, I went to Esther’s Mother and thanked her profoundly for Esther.</p>
+<p>After the wedding, we went to Neepawa for the first night, then our destination was to the Riding Mountain National Park for about four days. We got to know each other better, and even caught one fish, silly.</p>
+<h3 class="section-head">Sometimes I miss her so much …</h3>
+<p>Sometimes I miss her so much. I’m sure to those who knew her, she meant much to you too.</p>
+<p>I was told even when she was quite ill, she would hold other patients hands to comfort them. It would have been like her to do that.</p>
+<p>When I go to the PCH where Esther passed away, some of the staff remember her, they speak so fondly of her. Those comments make me so glad to have known her and had a part in her life.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-6" data-panel>
+      <div class="panel-meta"><p>CHAPTER 6</p><p>Contracting / home / family</p></div>
+      <div class="chapter-grid">
+        <aside class="folio">
+          <small>Contracting / home / family</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Homes, work and family</p><h2>Building a Life Together</h2><div class="body-copy">
+<p>We rented for some time after we were married. For two years we stayed in a one room motel unit with a bathroom, this is when I went to Bible school. We had Darlene by then, and Randy was born while we were at the motel.</p>
+<p>I was a contractor at the time. It was then we decided to build our first house. The lot cost us $3,200.00. We loaned approximately $10-12,000 for the house costs. Sounds alright, right? The lot size I think was 100’ wide x 220’ deep.</p>
+<p>It was here I chased Darlene, having fun, banged my hand and broke my thumb. Darlene got away.</p>
+<p>When at Riel Avenue in St. Vital, we bought five acres on 1131 Fraser Road, where we built our second house. We had so many good times there. Ask our children and our grandchildren about their experiences there.</p>
+<div class="photo-placeholder is-wide" data-label="Suggested: family home, Fraser Road"></div>
+<p>Stories like Randy raising chickens, pigs, horses, and calves, Esther playing games with the children, Evan learned to drive a bobcat, riding behind a ATV on a tarp etc.</p>
+<p>A couple near our place were watching when we would sell our house, it was such an easy sale.</p>
+<p>Then we moved to Landmark and lived there for a few years. Then Esther turned ill, so we moved to Niverville, and I’m still there.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-7" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 7</p><p>Children / grandchildren / stories</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+          <small>Children / grandchildren / stories</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Darlene, Randy, Richard and Sherry</p><h2>Our Children</h2><div class="body-copy">
+<h3 class="section-head">Darlene …</h3>
+<p>Our first precious baby, so beautiful, and all the good adjectives you can think of, and so fragile. Could or should I even hold her.</p>
+<p>She was always so protective of everybody and everything, even animals. Darlene didn’t much like me hunting. She is the best piano player in the whole wide world. She was, and is, very helpful and caring. Spend some time with her, and you’ll find out. Guess who one of my caregivers is now, when I’m old and miserable.</p>
+<p>One day a young man, John, still wet behind the ears, I’m not sure about that because I didn’t check, was dating Darlene. After some time he asked me if he could marry her. What to do. I said “no, no.” I didn’t, I can’t really remember what I said. I kind of liked him a little bit.</p>
+<p>They have given us four wonderful grandchildren, just about as nice as Darlene. Darlene likes to garden so much and still brings me stuff from it.</p>
+<h3 class="section-head">Randy …</h3>
+<p>When he was born, gave us quite a few concerns, but our gracious Heavenly Father did for him much better than the doctors predicted. He was never in trouble, we just looked at him and he responded well.</p>
+<p>When young, Randy had chickens, pigs, and his favourite, horses. Ask him about it sometime.</p>
+<p>When a little older, Randy became a musician, writer of songs and poems, inventor, and yes, even a hunter. We had a lot of good times together, especially in the bush. You should have got that elk I called in for you.</p>
+<p>We’d just about given up on Randy as to finding a partner. Then we ended up with a wonderful lady being added to our family, Kris.</p>
+<p>A little story about Randy, the chicken farmer … In the beginning, feeding starter feed was simple, but then he changed the feed. Not much later, the chickens became crippled so we ended up having a few less chickens. What’s wrong? We or he found he had fed them too much. The chickens had become too fat, so they couldn’t walk. All was okay, we had enough to eat.</p>
+<div class="photo-pair"><div class="photo-placeholder" data-label="Suggested: family photo, early years"></div><div class="photo-placeholder" data-label="Suggested: children at Fraser Road"></div></div>
+<h3 class="section-head">Richard …</h3>
+<p>Esther said he was the biggest but the easiest delivery of them all. I should get some credit for that, I massaged Esther’s back, she said that had made a big difference, till they sent me out.</p>
+<p>Those were the days, I’m still upset, I guess men weren’t supposed to see those kinds of events. I never was allowed to see one of our children being born.</p>
+<p>Richard was a good bad child all at the same time. After church one time, someone brought him back to the church, they had seen him walking about two blocks away. You would close your eyes, and he was gone. He set fires etc., etc.</p>
+<p>Later he was gallivanting, got sleepy, ditched the car, and just went to sleep. Where was Richard? Again, someone brought him home.</p>
+<p>Richard was good at just about everything, a mechanic, plumber, electrician, carpenter, musician, and a girl’s boy. Also a big game hunter.</p>
+<p>Richard worked for many years doing construction jobs all over, mostly in Winnipeg, but he also went as a foreman to Lake Louise, Alberta, to build a chalet. Thanks Richard.</p>
+<p>Richard finally settled down and married Cindy, and has three wonderful children, who by now have given us great-grandchildren. Grandchildren are Dr. Jeremiah, nurse Maliry, and teacher Adam.</p>
+<h3 class="section-head">Sherry …</h3>
+<p>A really difficult beginning. The Lord gave her to us twice, at birth and when I asked the Lord to take her home, and then He gave her back to us. Thank-you, Jesus! You knew what was best. I wish Esther was here to describe this journey.</p>
+<p>Sherry is a nurse and coordinator of staff and clients for Silver Lining Care. They are a great organization. They took care of Esther when she was ill. I appreciated so much how they cared for the love of my life.</p>
+<p>Thank-you, Sherry, for you and being one of my health advisors, and caregivers.</p>
+<p>Sherry went to Wpg. Bible College. Then met a young man who was a total stranger for us. We met him, got to know him a little bit, and then he asked the difficult question. What to say. I trusted Sherry’s decision as well, so I said Yes.</p>
+<p>I don’t know what else I said but trust that you, Mark, will always remember that Sherry is a precious gift from God to Esther and I.</p>
+<p>Sherry &amp; Mark have given us four wonderful grandchildren, and by now great-grandchildren. Sherry, you finally got your wish, that you became a grandmother. What a trip, and it’s not over yet.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-8" data-panel>
+      <div class="panel-meta"><p>CHAPTER 8</p><p>Mother / grandmother / church</p></div>
+      <div class="chapter-grid">
+        <aside class="folio">
+          <small>Mother / grandmother / church</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">A little more about Esther</p><h2>Esther, Mother and Grandmother</h2><div class="body-copy">
+<p>Maybe I’ll repeat some of the things I’ve written before, excuse me. Maybe if you hear it twice, you might remember it better.</p>
+<p>Esther loved our children, and grandchildren. She would easily have given her life for them. She loved them to pieces.</p>
+<p>I don’t ever remember Esther ever being angry or cross, and if you children do, don’t tell me about it.</p>
+<p>Esther was a great cook, and caregiver. Proverbs 31:10 describes Esther almost perfectly.</p>
+<p>She made sure that all of our children took piano lessons, made sure that all of us took good care of our teeth, going to the dentist regularly.</p>
+<div class="photo-placeholder is-wide" data-label="Suggested: Esther with children or grandchildren"></div>
+<p>Esther got me to go to Gospel Mennonite Church. The Pastor was Ben Sawatzky, who Esther liked so much. I liked him too. He later counselled us, and married us. So far it held together till Jesus took Esther home.</p>
+<p>Esther became very involved in our church, Morrow Gospel Church. She held the position of Sunday School Superintendent, boy that’s a long word, for quite a few years. Esther was also in the Ladies choir for quite a while, besides being a deacon’s wife.</p>
+<p>She thought I was too involved but I thought the same about her. I don’t think she ever complained about the situation.</p>
+<p>Esther never complained about me hunting or cooking whatever I or the boys brought home.</p>
+<div class="memory-quote">I better stop writing about Esther. I could write a book about her and even then, I would miss some things.</div></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-9" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 9</p><p>Mission / travel / service</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+          <small>Mission / travel / service</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Visits, work and faith</p><h2>Ecuador</h2><div class="body-copy">
+<p>We went to Ecuador four or five times where my sister, Nettie, was a missionary, to visit and to work. The field director invited us to come and to prepare a place for a missionary couple who were coming.</p>
+<p>Esther liked flying very much. I did too.</p>
+<p>One time when we were about to go home, the pilot said they had an issue with the aircraft. So we were taken to a Hilton Hotel. It was a bit more than we would have expected in regards to the service, food, etc. We hoped the problem wouldn’t get fixed for a few days.</p>
+<p>About 11 p.m. a call on the loud speaker “the plane leaves at 11:30.” Very good but also kind of disappointing.</p>
+<p>One time we were stranded for a while when Northwest Airlines employees went on strike. We had to buy new tickets to get home.</p>
+<div class="photo-placeholder is-wide" data-label="Suggested: Dick and Esther in Ecuador"></div>
+<p>Nettie’s place was near to where the five missionaries were killed by Auca Indians. I won’t be able to write much about this, it’s a big story. You technical, savvy people, check it on the computer or ask me about it over a cup of coffee.</p>
+<p>If possible, go visit someone, or volunteer, in a different people group, it was a rich and growing experience, at least for us.</p>
+<p>Just one little, no fairly big event … I was given a set of keys for the whole compound. I lost them while working on one project. If the keys wouldn’t be found and if the keys were in the hands of the wrong people, there could be trouble. All locks would have to be changed.</p>
+<p>On the last day, and much prayer, Esther found them in about 6” of grass. Praise the Lord!</p>
+<h3 class="section-head">Henry &amp; Pat Klassen …</h3>
+<p>Henry &amp; Pat Klassen were missionaries to an Indian group Quechua. They served there for approximately 40 years. The local people were into “chicha,” a very toxic drink, many of the people were drunk.</p>
+<p>In the beginning the missionaries had to bury the Christian dead on missionary property. I don’t know much of the details, but the people came to Christ in large numbers. Drinking virtually stopped. Many congregations were established, and many without the help of the missionaries. They came to the Klassen’s for instruction, teaching, then went home to do the work.</p>
+<p>Some of them came to Henry &amp; Pat Klassen. They wanted to use the large tent in which to have one of their meetings. Henry said yes, but he cautioned that the rainy season was coming and the tent had to be put away dry.</p>
+<p>They told Henry that was okay, they had prayed about it. Henry said it would have to be dry just a little longer in order to put it away dry. They said we didn’t pray about that, but they would and come back and let Henry know.</p>
+<p>They came back and said they had prayed and it was okay now. The day after the meetings, they put the tent away and as soon as they had put it away, the heavens opened up and it poured.</p>
+<div class="memory-quote">What faith. Oh to have faith like that.</div></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-10" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 10</p><p>Jamaica / Alaska / fishing</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+          <small>Jamaica / Alaska / fishing</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Travel with Esther and friends</p><h2>Jamaica and Other Travels</h2><div class="body-copy">
+<h3 class="section-head">Trip to Jamaica …</h3>
+<p>Esther &amp; I fondly remembered our trip to Jamaica. Dear friends of ours, Tony &amp; Mildred Beach, had built a villa in Jamaica, Tony’s original country. They seemingly couldn’t get it finished, “could we come to help them.”</p>
+<p>We worked hard and got it finished, that was good, but what was better was the time with them, going out for many meals, sightseeing, walking up and down a fairly long waterfall. You should see the pictures. Also seeing dolphins at play and pushing people around in the water.</p>
+<div class="photo-pair"><div class="photo-placeholder" data-label="Suggested: Jamaica villa or waterfall"></div><div class="photo-placeholder" data-label="Suggested: Dick and Esther travelling"></div></div>
+<h3 class="section-head">Alaska …</h3>
+<p>John &amp; Tena Enns, and Esther &amp; I went to Alaska for sightseeing, and relaxation. We went on a glacier tour. What an amazing creation of God. We also saw whales. Oh, I almost forgot, also deep sea fishing at Homer, Alaska. What a blast.</p>
+<p>Four men from somewhere in Europe, John Enns, and I. We fished for halibut, and lingcod. We all limited out. I think the biggest fish caught was approximately 60 lbs. halibut. My biggest was approximately 40 lbs. Lingcod on average are 40-60 lbs.</p>
+<p>Another couple, our director on an MDS project, and Esther &amp; I, went fishing for red fish. When we were fishing the captain said, “if you see birds diving, that’s where we want to go.” When it happened, there were fishing boats coming from all directions.</p>
+<p>Captain says, “put your bait in,” and as soon as we did that, I think everyone was into a large “red,” about 20 lbs.</p>
+<p>My biggest thrill was watching Esther reeling in her fish. She did very well. I really wish we could do that again, with Esther. Maybe we’ll do that in Heaven.</p>
+<div class="memory-quote">“Eye hath not seen, nor ear heard, neither have entered into the heart of man, the things which God hath prepared for them that love him.” 1 Corinthians 2:9, KJV</div>
+<p>Fishing seems possible. I know He is not going to short change us.</p>
+<p>Our responsibility is to “… love the Lord your God with all your heart, with all your soul, and with all your mind.” Matthew 22:37, NIV</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-11" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 11</p><p>MDS / rebuilding / service</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+          <small>MDS / rebuilding / service</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Building after disaster</p><h2>Mennonite Disaster Service</h2><div class="body-copy">
+<p>It was so exciting to volunteer with Mennonite Disaster Service. We almost always went together, Esther &amp; I. My job was usually building houses after floods, in Louisiana, or fires in Texas. Esther usually helped in the kitchen, as a cooks assistant. Esther just loved to work on building sites as well, cleaning up etc. We mostly did disaster work in the USA.</p>
+<p>I like telling one story … the rule was, build the house higher than the water had been. I had a bit of an idea what we would face on one project. Before we went, I asked a good friend of ours, John Enns, to come as well.</p>
+<p>This one house needed to be built approximately 20’ off the ground, set on piers, hydro poles, and imbedded into concrete pads. The soil was saturated with water, couldn’t drive into the area. John rented an excavator to dig for pads, set poles and pour the concrete. It worked well.</p>
+<p>If it hadn’t been for John, the excavator, and the Amish man working the muck, we’d still be there. The Amish were often a very big factor in getting projects done. When I heard that the Amish or Old Order Mennonites were coming, I was happy. They were such good, hard, dependable workers, they know how to work.</p>
+<div class="memory-quote">You should see the Amish women work, almost as good as Esther.</div>
+<div class="photo-placeholder is-wide" data-label="Suggested: Dick and Esther on an MDS project"></div>
+<h3 class="section-head">A sombre evening …</h3>
+<p>One day I asked one of these men, I can’t remember his name and where they lived, if they lived close to the place where the young girls were killed by a man. They said that they were neighbours to all the people involved, including the shooter.</p>
+<p>I was to have devotions the next morning. I asked him if he would lead the devotions and share. He said yes. I told our director about the change, he said “let’s have them for the Wednesday evening event,” fellowship time.</p>
+<p>It all worked out very good. A lot of very sombre stories of the event told. Just one story, the killer man told the girls that he would kill them. One of the girls said, “could we pray first,” he said yes, she did then she asked him “if he would pray as well,” he declined and said that “he was mad at God for something in his family.”</p>
+<p>He killed six girls and seriously wounded one more. She was a witness to the event. The Amish that were there said “something must have snapped because he wasn’t that kind of guy.”</p>
+<p>I think there wasn’t a dry eye anywhere that evening. Check your computer for more details of this event.</p>
+<p>I strongly suggest that you all who read of these events spend some of your life in doing voluntary service. I believe that Mennonite Disaster Service and Samaritans Purse are very good organizations to work with.</p>
+<p>These trips with Mennonite Disaster Service were some of the best experiences of our lives. If you would like to hear more, please let’s go for coffee, tea, or Pepsi, and will visit.</p>
+<h3 class="section-head">A few more MDS stories …</h3>
+<p>One young man didn’t like me very much. I was on the roof working and he was down below. Just before they went for dinner, he took the ladder away. After a while some came and rescued me. It wasn’t that funny then, but it is now.</p>
+<p>Change in a client’s life … we came to her and said we wanted to build them a house. She said “everybody says they will but they don’t.” We assured her or at least we tried to, we would not let them down.</p>
+<p>We started and were ready to do the foundation, we ordered the concrete. The driver hit some trees, maybe brush. Did the sparks ever fly, she was that kind of woman. As the house was being built, she and her husband watched our every move, maybe not quite.</p>
+<p>When we finished the house, I asked her if I could pray with her, “yes.” I started praying then I heard her, she was praying in tongues. What an experience to see the appreciation and change in people’s lives who have suffered so much.</p>
+<p>Mennonite Disaster Service has a dedication event for every house built. A set of keys and a blanket are given to the homeowner. It’s so good to see and hear the appreciation for the house, but especially for all the people who helped build it.</p>
+<p>Some volunteers came for one week, two weeks, or a month. Some actually came for a lot longer time.</p>
+<p>Many homes were destroyed or taken away by flood or by fire. We were in Texas after wild fires. One lady lived in a mobile home which was taken by the fire. She escaped, lost everything. She thought she lost her cat but the “cat came back,” partially scorched. She said when it rained, something gets exposed and she relives the event all over again.</p>
+<p>A lady who owned a riding stable said something like the following, they had been told about the fire coming their way. Then they saw the fire billowing over a mountain range, not too far away. In no time the fire was there, most of it was in the sky above them, landing again beyond them. I think they lost a farm building. The fire singed a few horses but they were spared. Basically it had jumped over them. They were told to get out. They got out just in time.</p>
+<h3 class="section-head">A tornado in Manitoba …</h3>
+<p>A tornado in Manitoba, southeast of Brandon. I was asked if I would take the MDS tool trailer to the tornado site.</p>
+<p>Someone phoned the family, “the tornado is coming your way.” Their son, wife and child were in a house trailer on the yard. The son runs and takes his wife and child and together they go into basement of the house, along with parents. They sat against basement wall. As soon as they had sat down, their house, floor and everything was gone.</p>
+<p>The wall, basement wood wall, leaned over them but did not fall on them. Large trees on the yard were twisted off about 10’ from the ground, like a mower cutting grass.</p>
+<p>This could happen anywhere. It was the local MDS unit that worked with the family to build a new house.</p>
+<p>I believe that there will be many opportunities to get involved in the next few years. Hopefully covid 19 will get out of the way soon.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-12" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 12</p><p>Deer / archery / caribou</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+          <small>Deer / archery / caribou</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">I’ll tell you just a few</p><h2>Hunting Stories</h2><div class="body-copy">
+<p>I’ll tell you just a few.</p>
+<p>My brother, Dave, and I went for an evening hunt for deer about ½ mile from home. I went through the bush, yelling, trying to scare the deer, if there were any, towards Dave, at the end of the bush. Suddenly, I saw a monster buck with his head almost at the ground hiding on me.</p>
+<p>I had an old 30/30 rifle. I stopped, cocked the gun, and he just stood there, and I knew I got him. I remembered that I was so overwhelmed, I prayed and thanked God before I went to look. I was almost afraid to go look. Everybody, especially my Dad, was so happy for me. I was too.</p>
+<p>Just a note about the antlers, I didn’t know how to mount them because of the drop tines. Esther also was protective of them … “don’t lose them or abuse them.” After many years, I got a new cape and a full head mount. I have it in my den. Ask me and I’ll show it to you.</p>
+<div class="photo-placeholder is-wide" data-label="Suggested: Dick with deer or the mounted antlers"></div>
+<p>I could write dozens of stories about hunting, maybe I should write a book about deer stories. I’ve made quite a few trips in an effort to get an elk or a moose, but not successful so far.</p>
+<p>My son, Richard, got an elk when we were hunting in Riding Mountain. Rick Doerksen got a moose in archery season, hunting in Turtle Mountain. He said, “it’s so easy,” oh yah. I’m still trying.</p>
+<h3 class="section-head">Archery hunting …</h3>
+<p>I’ve shot many deer with rifle and archery. Randy, my son, got me into archery hunting. It’s so much more peaceful, hunting archery.</p>
+<p>A bird lands close to you, a squirrel runs over your shoulder, or picking up acorns and hiding them, might as well have left them where they were. Or, even another hunter walking by, but not seeing you, then the deer, what we were waiting for. We usually hunted from a tree stand.</p>
+<p>A tree stand story … I placed steps into tree, went up and placed a stand, then placed a brace and then I climbed under the stand to make sure that the brace was properly placed. Naturally I grabbed branches for support, what I should have done was make sure the branch was a good one, well it wasn’t.</p>
+<p>I fell backwards into the turf, I thanked God for keeping me safe. It was such a soft landing. I thought if I could do that again, I would. It could have been much worse and on top of that, no one knew where I was.</p>
+<h3 class="section-head">Moose and elk …</h3>
+<p>A little story with a sad ending for Richard, but a good ending for the moose. I called “cow call,” the bull moose responded but didn’t come in, we thought. We went back to the ATV, then went back to where we had come from. There he stood, right in the open, about 50 yards away.</p>
+<p>Dick, “I can’t shoot that far,” bow and arrow hunting, so we got ready and started walking towards him. When about 40 yards away, he flinched as if he was going to run. Dick, “we better do it now, let’s release on 3.” I can still see the arrows flying like twins under him.</p>
+<div class="memory-quote">I think we might have tickled his hair. You can guess the rest.</div>
+<p>I’ve hunted for moose, 2 trips, to northern Alberta, with a guide. A number of trips to Turtle Mountain, also to Riding and Duck Mountain.</p>
+<p>A story I called “elk call” … Randy was in an ambush place, about 50 yards from me. He had the feeling something was close to him, he then turns, there is a young bull elk, real close to him. But, one time, same set up, I called and a wolf or wolves, howled just beyond where Randy was. I quickly went to Randy. I think the wolves were responding to my calling elk.</p>
+<p>Richard loves hunting big game, not so much the small deer. He invited me on a fly-in moose hunt to northern Manitoba. We had a wonderful time, the fishing was very good. Thank-you, Richard, just in case I didn’t say it then.</p>
+<h3 class="section-head">Caribou country …</h3>
+<p>I made a few trips to Bullock Lake, west of Churchill, on caribou hunting trips. It’s an awfully long walk, and or swim, so we took a float plane to get there.</p>
+<p>I wish everybody could get into that kind of surroundings. It’s so different.</p>
+<p>I’ll list a few things, no trees, except near water and lakes, tundra, soft moss, for the most part, wild edible berries on plants and shrubs, blueberries everywhere, snow geese flying and honking all night, night music, seeing ptarmigan, wild chickens like prairie chickens, ptarmigan are white in winter and brownish in summer, and even caribou.</p>
+<p>Guide says “if you see a bear it likely will not be very friendly, so watch out.” We never saw one. Fishing, great fishing, mostly northern pike and lake trout. I caught a Laker right off of shore.</p>
+<p>Back to caribou, that’s why we were there. They are nomadic, running a lot of the time. They would run up to water, jump in, swim across and come out running. Our limit was two each. I think everybody limited out. Come to see one set of antlers displayed in my den.</p>
+<p>One of our hunters shot a beautiful bull caribou. When we got there, what a mess. Wolves had ripped it up. Gangrene had set in, and it stank. We deboned all the meat, cleaned it up real good, and put the meat in meat bags and hung it up. It all stayed good even though it wasn’t that cold.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-13" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 13</p><p>Perch / charters / stories</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+          <small>Perch / charters / stories</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Fishing with family and friends</p><h2>Fishing Stories</h2><div class="body-copy">
+<p>I did a lot of fishing. I enjoyed more than anything the fishing with our children and grandchildren.</p>
+<p>Perch were plentiful in Lake Manitoba for a period. When some of the kids were too small to reel well, I told them when they felt a bite, to grab the rod and run. I can still see the perch bouncing behind the child. We would sometimes catch a five gallon pail full.</p>
+<div class="photo-placeholder is-wide" data-label="Suggested: fishing with children or grandchildren"></div>
+<p>When younger, the boys and I, and often some friends, would go to various lakes and rivers, and do quite well. When on camping trips, fishing was usually part of it.</p>
+<p>When I was with MDS, Mennonite Disaster Service, just about everywhere we were, I would ask others or check local papers, about “if there was good fishing somewhere.” As a result we once went to California, once went to fish in Texas, in Mexican waters, and also local fishing.</p>
+<p>A few fishing stories … we were on a fairly large fishing charter, about 40-50 people fishing. Fishing was very good, next the funny part … a man was casting and somehow the line got caught on his teeth, false teeth, and they flew overboard.</p>
+<div class="memory-quote">It was funny for others but not for him.</div>
+<p>We were fishing in Mexico, I think, we were losing bait to something, and then we saw what was doing it. It was seals, they take the bait but never the hook. The seals were approximately 2’ long to about 6-8’ long. Finally the captain said, “pull up your lines, let’s move.” I think we did that two times. Our bait was a small fish about 4-6” long, live bait.</p>
+<p>One place I went along with someone who was fishing for a type of fish which was much like an alligator, especially the head. They were small, approximately 30-40 lbs. The method was almost like a trap. A hook with bait, a heavy line and a javex bottle tied to the other end.</p>
+<p>Even while going quite fast, he would throw the thing into the water, river. He set about 10 of these, when we came back, I think we had three of them. Make sure they’re dead before putting them into your boat, if not they could do a lot of damage.</p>
+<p>They said they were very tasty. I don’t remember tasting them.</p></div></section>
+      </div>
+    </article>
+<article class="chapter-panel" id="chapter-14" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 14</p><p>Puzzles / music / family</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+          <small>Puzzles / music / family</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">Later years and friendship</p><h2>Elizabeth in the Picture</h2><div class="body-copy">
+<p>It was a rough start for her. I was puzzling and she asked if she could help me, and I growled and said no. I find it hard to believe that I would do that, especially to such a pretty lady.</p>
+<p>I do believe what she said but … I think I must have been out of my mind.</p>
+<p>A bit later I asked her to help, and she did. Thank-you Liz.</p>
+<div class="photo-placeholder is-wide" data-label="Suggested: Dick and Elizabeth, later years"></div>
+<p>We have had a lot of good times together. We have done over 100 puzzles and this trip isn’t over yet. We listen to TV services on Sunday morning, also to the Gaither’s sing, and Time to Sing on Friday evenings.</p>
+<p>I am thankful, Liz, for being a good friend to me and my family. Maybe we can do another puzzle or two.</p>
+<p>You can come and help us, I think that is a good idea. Grandchildren, please come, I might take you out for dinner, wouldn’t that be fun. There is a pretty good restaurant here.</p>
+<div class="memory-quote">Please come over before I … this time I didn’t say it, Sherry.</div></div></section>
+      </div>
+    </article>
+    <article class="chapter-panel" id="chapter-15" data-panel data-photo="true">
+      <div class="panel-meta"><p>CHAPTER 15</p><p>1939–2026</p></div>
+      <div class="chapter-grid">
+        <aside class="folio"><div class="folio-photo">Photo slot<br>portrait of Dick</div>
+          <small>1939–2026</small>
+        </aside>
+        <section class="chapter-copy"><p class="eyebrow">In memory of Diedrich “Dick” Buhler</p><h2>Obituary</h2><div class="body-copy obituary-copy">
+<p>Diedrich Buhler, age 86, of Niverville, MB., formerly of Winnipeg, MB., passed away peacefully with family by his side, Sunday, January 11, 2026 at Bethesda Regional Health Centre, Steinbach, MB.</p>
+<p>He is survived by his four children, daughter Darlene and husband John, son Randy and wife Kris, son Richard and wife Cindy, daughter Sherry and husband Mark. Dick was blessed with 11 grandchildren. Jenni-Lynn and husband Dale, Adam and wife Mandy, Melissa and husband Richard, Maliry and husband Angelo, Jeremiah and wife Heidi, Evan, Dana and husband Bud, Michaela and husband Ben, Callum, Tanner and wife Bella and Brenna, 18 great-grandchildren Elliot, Oliver, Asher, Cannon, Annabel, Savannah, Zachariah, Hayes, Jeriah, Emma, Rone, Bennett, Sena, Francis, Robin, Copelin, Auden and Jack. He is also survived by his brother Bill and wife Irma, and brother-in-law, Ron.</p>
+<p>He was predeceased by his parents John and Nettie Buhler, his wife Esther, six sisters and nine brothers.</p>
+<p>Dick was born on July 31, 1939, to John and Nettie Buhler near Arden MB. He was the third youngest of 17 children. Growing up in a large family, he would help on the farm and enjoyed trapping and hunting with his brothers. In his late teens, he moved to Steinbach, then Winnipeg where he lived most of his adult life. On August 28, 1960, at the age of 21, he married Esther Funk back in Arden, Manitoba. They made Winnipeg home to raise their family, first in St. Vital then on Fraser Road in St. Germain.</p>
+<p>Dick personally built the family homes at both of these locations. After retirement, they moved to Landmark and then on to the Heritage Life Community in Niverville.</p>
+<p>Thanks to his parents’ influence and teaching, Dick received Jesus as his personal Savior at a young age. Faith was always central in his family home, which he carried into his home with Esther. He was always active in the churches they attended and poured himself into various roles, including serving as deacon for many years. His generous spirit and heart to serve came from a deep faith and sincere desire to live out his faith as written in the Scriptures.</p>
+<p>Life became very busy for Dick. He worked as a contractor for almost 40 years, alongside being extensively involved in church life. He established his contracting company, Linster Construction while raising a family but made sure there was time for camping with the entire family also fishing and hunting with his boys.</p>
+<p>Dick loved to volunteer and was privileged to serve on several trips to Ecuador with GMU and many more trips in Canada and the US with Mennonite Disaster Service, rebuilding homes after floods and fires. Dick’s experience as a general contractor greatly helped with the work on these excursions. He found these trips exciting and so rewarding. Dick spent the last number of years volunteering at Union Gospel Mission, going weekly to sort donated clothing until April 2025. He preached there as a young man and did major construction work on their buildings many years later. Union Gospel Mission was always close to his heart.</p>
+<p>Dick had many years of pain from cancer treatment. However, even during these last challenging years he chose to live life to the fullest through serving, helping others, visiting with friends in coffee shops, and countless hunting and fishing trips. Time spent with his family was what he treasured most, especially when the grandchildren and great-grandchildren were with him.</p>
+<p>The family would like to express our deepest gratitude to the doctors and staff at Bethesda Regional Health Center for their compassionate care and the kindness and support they showed to all of us. Special thanks are also extended to Nettie and Susan for their care and companionship during his time in the hospital.</p>
+
+</div></section>
+      </div>
+    </article>
+      </div>
+    </section>
+
+    <footer class="site-footer"><span>Dick Buhler / Recollections</span><span>Version 4 · obituary closing chapter added</span></footer>
+  </main>
+
+  <script>
+    const tabs = [...document.querySelectorAll('.tab')];
+    const panels = [...document.querySelectorAll('[data-panel]')];
+    function activate(id, push = true) {
+      tabs.forEach(tab => { const active = tab.dataset.target === id; tab.classList.toggle('is-active', active); tab.setAttribute('aria-selected', active ? 'true' : 'false'); });
+      panels.forEach(panel => panel.classList.toggle('is-active', panel.id === id));
+      if (push) history.replaceState(null, '', '#' + id);
+      document.querySelector('#story').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    tabs.forEach(tab => tab.addEventListener('click', () => activate(tab.dataset.target)));
+    document.querySelector('[data-jump]')?.addEventListener('click', () => document.querySelector('#story').scrollIntoView({ behavior: 'smooth' }));
+    const initial = location.hash.replace('#','');
+    if (initial && document.getElementById(initial)) activate(initial, false);
+  </script>
+</body>
+</html>

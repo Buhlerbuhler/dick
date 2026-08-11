@@ -400,7 +400,7 @@
 
     .hero-photo,
     .photo-placeholder {
-      border: 2px solid var(--line);
+      border: none;
       background:
         linear-gradient(135deg, rgba(67,87,71,.09), rgba(164,86,56,.07)),
         var(--paper-deep);
@@ -480,7 +480,7 @@
     .eyebrow { color: var(--red); }
 
     .chapter-panel[data-photo="true"] .folio-photo {
-      border: 2px solid var(--line);
+      border: none;
       min-height: 210px;
       margin-bottom: .8rem;
       display: grid;
@@ -508,6 +508,73 @@
       .photo-pair { grid-template-columns: 1fr; }
     }
 
+    .hero-photo img,
+    .photo-placeholder img,
+    .folio-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-photo:has(img)::before,
+    .hero-photo:has(img)::after,
+    .photo-placeholder:has(img)::before,
+    .photo-placeholder:has(img)::after {
+      display: none;
+    }
+
+    .folio-photo {
+      overflow: hidden;
+    }
+    .folio-photo img.align-left {
+  object-position: left center;
+}
+/* Make photos feel clickable */
+.photo-placeholder img,
+.folio-photo img,
+.hero-photo img {
+  cursor: pointer;
+}
+
+/* Lightbox overlay */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 20, 18, 0.92);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  z-index: 9999;
+}
+
+.lightbox.is-open {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 95vw;
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -517,16 +584,16 @@
       <div class="intro-layout">
         <div class="intro-copy">
           <h1>Dick<br>Buhler</h1>
-          <p><strong>Recollections.</strong> Stories of home, family, faith, and the outdoors.</p>
+          <p><strong>Recollections.</strong> Stories told in Dick’s own words, organized here so the memories are easier to follow while keeping the humour, faith, and wandering conversation intact.</p>
           <button class="enter-button" data-jump>Open the recollections ↓</button>
         </div>
-        <div class="hero-photo" data-label="Hero photo: portrait of Dick Buhler"></div>
+        <div class="hero-photo"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/dick.jpg" alt="Dick Buhler"></div>
       </div>
     </section>
 
     <section class="book-interface" id="story">
       <nav class="tabs" aria-label="Chapter tabs">
-        <div class="tabs-header"><span>Index</span><span>01–14</span></div>
+        <div class="tabs-header"><span>Index</span><span>01–15</span></div>
         <button class="tab is-active" data-target="chapter-1" aria-selected="true"><span>01</span><b>I Heard …</b></button>
 <button class="tab" data-target="chapter-2" aria-selected="false"><span>02</span><b>Growing Up on the Farm</b></button>
 <button class="tab" data-target="chapter-3" aria-selected="false"><span>03</span><b>Boats, Swimming &amp; Trouble</b></button>
@@ -657,7 +724,7 @@
 <article class="chapter-panel" id="chapter-5" data-panel data-photo="true">
       <div class="panel-meta"><p>CHAPTER 5</p><p>Courtship / wedding / love</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+        <aside class="folio"><div class="folio-photo"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/Buhler20060002.jpg" alt="Dick Buhler"></div>
           <small>Courtship / wedding / love</small>
         </aside>
         <section class="chapter-copy"><p class="eyebrow">Meeting Esther</p><h2>Esther in the Picture and in My Life</h2><div class="body-copy">
@@ -667,7 +734,7 @@
 <p>I was determined to date her. One day or evening I decided I’ll go. Dating and other things were different then … no phone, no events to take her too. So I went to her house and guess what, no one was home. What a relief but I was determined that next time I was going to be more okay.</p>
 <p>It was Christmas season the first time with her. When I got there they were all there, her Dad &amp; Mum, and two sisters. Somehow I got it out that I wanted to see Esther and if she was okay about it. Somehow she gave me the “I’d like that.”</p>
 <p>It wasn’t the most romantic evening but it was the beginning of a wonderful relationship, not only with her but also with her family.</p>
-<div class="photo-pair"><div class="photo-placeholder" data-label="Suggested: Dick and Esther, young"></div><div class="photo-placeholder" data-label="Suggested: courtship or Bible school"></div></div>
+<div class="photo-pair"><div class="photo-placeholder"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000007-(2).jpg" alt="Dick and Esther, young"></div><div class="photo-placeholder"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/SKM_C25826011409460-copy.jpg" alt="courtship or Bible school"></div></div>
 <p>We had many good times together. I also helped with haying, driving tractor, fencing, putting a new roof on their house, including renovations, building new cabinets in their home and helped butchering. I kind of thought that I was rescuing her from a hard life. But maybe being married to me might have been harder?</p>
 <p>We dated for a year before we kissed, but after that we might have kissed a few more times. We went for walks, talked and planned. We almost always had a time of prayer in our times together, sure helped us to keep focus.</p>
 <p>I would go to Bible school for one year then take grade 10 at Steinbach Bible school, which we did together. Then one more year of Bible school, marriage, and whatever comes with it then.</p>
@@ -676,7 +743,7 @@
 <p>We dated for approximately four years. I was sure she was the right person but we both were quite young. My Mum was happy about our relationship but said, “I wish that they had met each other when they were older.” I didn’t think of myself as young then. I think people matured sooner those days than now. Ha.</p>
 <p>When we married, I was barely 21 and she was almost 20.</p>
 <p>Wedding … what an exhilarating day. Such character and beauty.</p>
-<div class="photo-placeholder is-wide" data-label="Suggested: Dick and Esther wedding photo, Arden, Manitoba"></div>
+<div class="photo-placeholder is-wide"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000005-(4).jpg" alt="Dick and Esther wedding photo, Arden, Manitoba"></div>
 <p>We got married in a little church in Arden, Manitoba. Pastor B.W. Sawatzky officiated. We had a song leader, Menno Hamm, and his brother, Elmer as M.C. Esther’s sister, Marion, was bridesmaid. My brother, Bill, was best man.</p>
 <p>The service began and everybody is standing. In walks the bridesmaid and best man. The M.C. gets everybody to sit down. A flurry took place … no, no, “the bridal couple are not in yet.” They just about married the wrong couple. Everything turned out just about right.</p>
 <p>I do wish I could remember something of what our Pastor said. I wish so much that all of you, especially my family, could marry someone as good as Esther.</p>
@@ -699,7 +766,7 @@
 <p>I was a contractor at the time. It was then we decided to build our first house. The lot cost us $3,200.00. We loaned approximately $10-12,000 for the house costs. Sounds alright, right? The lot size I think was 100’ wide x 220’ deep.</p>
 <p>It was here I chased Darlene, having fun, banged my hand and broke my thumb. Darlene got away.</p>
 <p>When at Riel Avenue in St. Vital, we bought five acres on 1131 Fraser Road, where we built our second house. We had so many good times there. Ask our children and our grandchildren about their experiences there.</p>
-<div class="photo-placeholder is-wide" data-label="Suggested: family home, Fraser Road"></div>
+<div class="photo-placeholder is-wide"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/002000001.jpg" alt="family home, Fraser Road"></div>
 <p>Stories like Randy raising chickens, pigs, horses, and calves, Esther playing games with the children, Evan learned to drive a bobcat, riding behind a ATV on a tarp etc.</p>
 <p>A couple near our place were watching when we would sell our house, it was such an easy sale.</p>
 <p>Then we moved to Landmark and lived there for a few years. Then Esther turned ill, so we moved to Niverville, and I’m still there.</p></div></section>
@@ -708,7 +775,13 @@
 <article class="chapter-panel" id="chapter-7" data-panel data-photo="true">
       <div class="panel-meta"><p>CHAPTER 7</p><p>Children / grandchildren / stories</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+        <aside class="folio"><div class="folio-photo">
+  <img
+    class="align-left"
+    src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000013.jpg"
+    alt="Dick Buhler"
+  >
+</div>
           <small>Children / grandchildren / stories</small>
         </aside>
         <section class="chapter-copy"><p class="eyebrow">Darlene, Randy, Richard and Sherry</p><h2>Our Children</h2><div class="body-copy">
@@ -723,7 +796,7 @@
 <p>When a little older, Randy became a musician, writer of songs and poems, inventor, and yes, even a hunter. We had a lot of good times together, especially in the bush. You should have got that elk I called in for you.</p>
 <p>We’d just about given up on Randy as to finding a partner. Then we ended up with a wonderful lady being added to our family, Kris.</p>
 <p>A little story about Randy, the chicken farmer … In the beginning, feeding starter feed was simple, but then he changed the feed. Not much later, the chickens became crippled so we ended up having a few less chickens. What’s wrong? We or he found he had fed them too much. The chickens had become too fat, so they couldn’t walk. All was okay, we had enough to eat.</p>
-<div class="photo-pair"><div class="photo-placeholder" data-label="Suggested: family photo, early years"></div><div class="photo-placeholder" data-label="Suggested: children at Fraser Road"></div></div>
+<div class="photo-pair"><div class="photo-placeholder"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000002-(4).jpg" alt="family photo, early years"></div><div class="photo-placeholder"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000011-(2).jpg" alt="children at Fraser Road"></div></div>
 <h3 class="section-head">Richard …</h3>
 <p>Esther said he was the biggest but the easiest delivery of them all. I should get some credit for that, I massaged Esther’s back, she said that had made a big difference, till they sent me out.</p>
 <p>Those were the days, I’m still upset, I guess men weren’t supposed to see those kinds of events. I never was allowed to see one of our children being born.</p>
@@ -753,7 +826,7 @@
 <p>I don’t ever remember Esther ever being angry or cross, and if you children do, don’t tell me about it.</p>
 <p>Esther was a great cook, and caregiver. Proverbs 31:10 describes Esther almost perfectly.</p>
 <p>She made sure that all of our children took piano lessons, made sure that all of us took good care of our teeth, going to the dentist regularly.</p>
-<div class="photo-placeholder is-wide" data-label="Suggested: Esther with children or grandchildren"></div>
+<div class="photo-placeholder is-wide"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/5000000000d001.jpg" alt="Esther with children or grandchildren"></div>
 <p>Esther got me to go to Gospel Mennonite Church. The Pastor was Ben Sawatzky, who Esther liked so much. I liked him too. He later counselled us, and married us. So far it held together till Jesus took Esther home.</p>
 <p>Esther became very involved in our church, Morrow Gospel Church. She held the position of Sunday School Superintendent, boy that’s a long word, for quite a few years. Esther was also in the Ladies choir for quite a while, besides being a deacon’s wife.</p>
 <p>She thought I was too involved but I thought the same about her. I don’t think she ever complained about the situation.</p>
@@ -764,7 +837,7 @@
 <article class="chapter-panel" id="chapter-9" data-panel data-photo="true">
       <div class="panel-meta"><p>CHAPTER 9</p><p>Mission / travel / service</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+        <aside class="folio"><div class="folio-photo"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000001-(4).jpg" alt="Dick Buhler"></div>
           <small>Mission / travel / service</small>
         </aside>
         <section class="chapter-copy"><p class="eyebrow">Visits, work and faith</p><h2>Ecuador</h2><div class="body-copy">
@@ -773,7 +846,7 @@
 <p>One time when we were about to go home, the pilot said they had an issue with the aircraft. So we were taken to a Hilton Hotel. It was a bit more than we would have expected in regards to the service, food, etc. We hoped the problem wouldn’t get fixed for a few days.</p>
 <p>About 11 p.m. a call on the loud speaker “the plane leaves at 11:30.” Very good but also kind of disappointing.</p>
 <p>One time we were stranded for a while when Northwest Airlines employees went on strike. We had to buy new tickets to get home.</p>
-<div class="photo-placeholder is-wide" data-label="Suggested: Dick and Esther in Ecuador"></div>
+<div class="photo-placeholder is-wide"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000057.jpg" alt="Dick and Esther in Ecuador"></div>
 <p>Nettie’s place was near to where the five missionaries were killed by Auca Indians. I won’t be able to write much about this, it’s a big story. You technical, savvy people, check it on the computer or ask me about it over a cup of coffee.</p>
 <p>If possible, go visit someone, or volunteer, in a different people group, it was a rich and growing experience, at least for us.</p>
 <p>Just one little, no fairly big event … I was given a set of keys for the whole compound. I lost them while working on one project. If the keys wouldn’t be found and if the keys were in the hands of the wrong people, there could be trouble. All locks would have to be changed.</p>
@@ -787,17 +860,17 @@
 <div class="memory-quote">What faith. Oh to have faith like that.</div></div></section>
       </div>
     </article>
-<article class="chapter-panel" id="chapter-10" data-panel data-photo="true">
+<article class="chapter-panel" id="chapter-10" data-panel>
       <div class="panel-meta"><p>CHAPTER 10</p><p>Jamaica / Alaska / fishing</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+        <aside class="folio">
           <small>Jamaica / Alaska / fishing</small>
         </aside>
         <section class="chapter-copy"><p class="eyebrow">Travel with Esther and friends</p><h2>Jamaica and Other Travels</h2><div class="body-copy">
 <h3 class="section-head">Trip to Jamaica …</h3>
 <p>Esther &amp; I fondly remembered our trip to Jamaica. Dear friends of ours, Tony &amp; Mildred Beach, had built a villa in Jamaica, Tony’s original country. They seemingly couldn’t get it finished, “could we come to help them.”</p>
 <p>We worked hard and got it finished, that was good, but what was better was the time with them, going out for many meals, sightseeing, walking up and down a fairly long waterfall. You should see the pictures. Also seeing dolphins at play and pushing people around in the water.</p>
-<div class="photo-pair"><div class="photo-placeholder" data-label="Suggested: Jamaica villa or waterfall"></div><div class="photo-placeholder" data-label="Suggested: Dick and Esther travelling"></div></div>
+<div class="photo-pair"><div class="photo-placeholder"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/Buhler20060130.jpg" alt="Jamaica villa or waterfall"></div><div class="photo-placeholder"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000030.jpg" alt="Dick and Esther travelling"></div></div>
 <h3 class="section-head">Alaska …</h3>
 <p>John &amp; Tena Enns, and Esther &amp; I went to Alaska for sightseeing, and relaxation. We went on a glacier tour. What an amazing creation of God. We also saw whales. Oh, I almost forgot, also deep sea fishing at Homer, Alaska. What a blast.</p>
 <p>Four men from somewhere in Europe, John Enns, and I. We fished for halibut, and lingcod. We all limited out. I think the biggest fish caught was approximately 60 lbs. halibut. My biggest was approximately 40 lbs. Lingcod on average are 40-60 lbs.</p>
@@ -812,7 +885,7 @@
 <article class="chapter-panel" id="chapter-11" data-panel data-photo="true">
       <div class="panel-meta"><p>CHAPTER 11</p><p>MDS / rebuilding / service</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+        <aside class="folio"><div class="folio-photo"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/00000050.jpg" alt="Dick Buhler"></div>
           <small>MDS / rebuilding / service</small>
         </aside>
         <section class="chapter-copy"><p class="eyebrow">Building after disaster</p><h2>Mennonite Disaster Service</h2><div class="body-copy">
@@ -821,7 +894,7 @@
 <p>This one house needed to be built approximately 20’ off the ground, set on piers, hydro poles, and imbedded into concrete pads. The soil was saturated with water, couldn’t drive into the area. John rented an excavator to dig for pads, set poles and pour the concrete. It worked well.</p>
 <p>If it hadn’t been for John, the excavator, and the Amish man working the muck, we’d still be there. The Amish were often a very big factor in getting projects done. When I heard that the Amish or Old Order Mennonites were coming, I was happy. They were such good, hard, dependable workers, they know how to work.</p>
 <div class="memory-quote">You should see the Amish women work, almost as good as Esther.</div>
-<div class="photo-placeholder is-wide" data-label="Suggested: Dick and Esther on an MDS project"></div>
+<div class="photo-placeholder is-wide"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/SKM_C25826011417450_0001-copy.jpg" alt="Dick and Esther on an MDS project"></div>
 <h3 class="section-head">A sombre evening …</h3>
 <p>One day I asked one of these men, I can’t remember his name and where they lived, if they lived close to the place where the young girls were killed by a man. They said that they were neighbours to all the people involved, including the shooter.</p>
 <p>I was to have devotions the next morning. I asked him if he would lead the devotions and share. He said yes. I told our director about the change, he said “let’s have them for the Wednesday evening event,” fellowship time.</p>
@@ -850,7 +923,7 @@
 <article class="chapter-panel" id="chapter-12" data-panel data-photo="true">
       <div class="panel-meta"><p>CHAPTER 12</p><p>Deer / archery / caribou</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+        <aside class="folio"><div class="folio-photo"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/DadBuhlerHunt.jpg" alt="Dick Buhler"></div>
           <small>Deer / archery / caribou</small>
         </aside>
         <section class="chapter-copy"><p class="eyebrow">I’ll tell you just a few</p><h2>Hunting Stories</h2><div class="body-copy">
@@ -858,7 +931,7 @@
 <p>My brother, Dave, and I went for an evening hunt for deer about ½ mile from home. I went through the bush, yelling, trying to scare the deer, if there were any, towards Dave, at the end of the bush. Suddenly, I saw a monster buck with his head almost at the ground hiding on me.</p>
 <p>I had an old 30/30 rifle. I stopped, cocked the gun, and he just stood there, and I knew I got him. I remembered that I was so overwhelmed, I prayed and thanked God before I went to look. I was almost afraid to go look. Everybody, especially my Dad, was so happy for me. I was too.</p>
 <p>Just a note about the antlers, I didn’t know how to mount them because of the drop tines. Esther also was protective of them … “don’t lose them or abuse them.” After many years, I got a new cape and a full head mount. I have it in my den. Ask me and I’ll show it to you.</p>
-<div class="photo-placeholder is-wide" data-label="Suggested: Dick with deer or the mounted antlers"></div>
+<div class="photo-placeholder is-wide"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/Buhler20060157.jpg" alt="Dick with deer or the mounted antlers"></div>
 <p>I could write dozens of stories about hunting, maybe I should write a book about deer stories. I’ve made quite a few trips in an effort to get an elk or a moose, but not successful so far.</p>
 <p>My son, Richard, got an elk when we were hunting in Riding Mountain. Rick Doerksen got a moose in archery season, hunting in Turtle Mountain. He said, “it’s so easy,” oh yah. I’m still trying.</p>
 <h3 class="section-head">Archery hunting …</h3>
@@ -885,13 +958,13 @@
 <article class="chapter-panel" id="chapter-13" data-panel data-photo="true">
       <div class="panel-meta"><p>CHAPTER 13</p><p>Perch / charters / stories</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+        <aside class="folio"><div class="folio-photo"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/Buhler20060141.jpg" alt="Dick Buhler"></div>
           <small>Perch / charters / stories</small>
         </aside>
         <section class="chapter-copy"><p class="eyebrow">Fishing with family and friends</p><h2>Fishing Stories</h2><div class="body-copy">
 <p>I did a lot of fishing. I enjoyed more than anything the fishing with our children and grandchildren.</p>
 <p>Perch were plentiful in Lake Manitoba for a period. When some of the kids were too small to reel well, I told them when they felt a bite, to grab the rod and run. I can still see the perch bouncing behind the child. We would sometimes catch a five gallon pail full.</p>
-<div class="photo-placeholder is-wide" data-label="Suggested: fishing with children or grandchildren"></div>
+<div class="photo-placeholder is-wide"><img src="https://raw.githubusercontent.com/Buhlerbuhler/dick/refs/heads/main/Untitled-4-(2).jpg" alt="fishing with children or grandchildren"></div>
 <p>When younger, the boys and I, and often some friends, would go to various lakes and rivers, and do quite well. When on camping trips, fishing was usually part of it.</p>
 <p>When I was with MDS, Mennonite Disaster Service, just about everywhere we were, I would ask others or check local papers, about “if there was good fishing somewhere.” As a result we once went to California, once went to fish in Texas, in Mexican waters, and also local fishing.</p>
 <p>A few fishing stories … we were on a fairly large fishing charter, about 40-50 people fishing. Fishing was very good, next the funny part … a man was casting and somehow the line got caught on his teeth, false teeth, and they flew overboard.</p>
@@ -902,27 +975,28 @@
 <p>They said they were very tasty. I don’t remember tasting them.</p></div></section>
       </div>
     </article>
-<article class="chapter-panel" id="chapter-14" data-panel data-photo="true">
+<article class="chapter-panel" id="chapter-14" data-panel>
       <div class="panel-meta"><p>CHAPTER 14</p><p>Puzzles / music / family</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>optional chapter image</div>
+        <aside class="folio">
           <small>Puzzles / music / family</small>
         </aside>
+
         <section class="chapter-copy"><p class="eyebrow">Later years and friendship</p><h2>Elizabeth in the Picture</h2><div class="body-copy">
 <p>It was a rough start for her. I was puzzling and she asked if she could help me, and I growled and said no. I find it hard to believe that I would do that, especially to such a pretty lady.</p>
 <p>I do believe what she said but … I think I must have been out of my mind.</p>
 <p>A bit later I asked her to help, and she did. Thank-you Liz.</p>
-<div class="photo-placeholder is-wide" data-label="Suggested: Dick and Elizabeth, later years"></div>
+
 <p>We have had a lot of good times together. We have done over 100 puzzles and this trip isn’t over yet. We listen to TV services on Sunday morning, also to the Gaither’s sing, and Time to Sing on Friday evenings.</p>
 <p>I am thankful, Liz, for being a good friend to me and my family. Maybe we can do another puzzle or two.</p>
 <p>You can come and help us, I think that is a good idea. Grandchildren, please come, I might take you out for dinner, wouldn’t that be fun. There is a pretty good restaurant here.</p>
 <div class="memory-quote">Please come over before I … this time I didn’t say it, Sherry.</div></div></section>
       </div>
     </article>
-    <article class="chapter-panel" id="chapter-15" data-panel data-photo="true">
+    <article class="chapter-panel" id="chapter-15" data-panel>
       <div class="panel-meta"><p>CHAPTER 15</p><p>1939–2026</p></div>
       <div class="chapter-grid">
-        <aside class="folio"><div class="folio-photo">Photo slot<br>portrait of Dick</div>
+        <aside class="folio">
           <small>1939–2026</small>
         </aside>
         <section class="chapter-copy"><p class="eyebrow">In memory of Diedrich “Dick” Buhler</p><h2>Obituary</h2><div class="body-copy obituary-copy">
@@ -936,7 +1010,11 @@
 <p>Dick loved to volunteer and was privileged to serve on several trips to Ecuador with GMU and many more trips in Canada and the US with Mennonite Disaster Service, rebuilding homes after floods and fires. Dick’s experience as a general contractor greatly helped with the work on these excursions. He found these trips exciting and so rewarding. Dick spent the last number of years volunteering at Union Gospel Mission, going weekly to sort donated clothing until April 2025. He preached there as a young man and did major construction work on their buildings many years later. Union Gospel Mission was always close to his heart.</p>
 <p>Dick had many years of pain from cancer treatment. However, even during these last challenging years he chose to live life to the fullest through serving, helping others, visiting with friends in coffee shops, and countless hunting and fishing trips. Time spent with his family was what he treasured most, especially when the grandchildren and great-grandchildren were with him.</p>
 <p>The family would like to express our deepest gratitude to the doctors and staff at Bethesda Regional Health Center for their compassionate care and the kindness and support they showed to all of us. Special thanks are also extended to Nettie and Susan for their care and companionship during his time in the hospital.</p>
-
+<div class="obituary-service">
+<p><strong>The come &amp; go viewing will be held on Friday, January 16, 2026, from 7:00 p.m. - 9:00 p.m. at Morrow Gospel Church, 755 St. Anne's Road, Winnipeg, MB.</strong></p>
+<p><strong>The memorial service will be held on Saturday, January 17, 2026, at 11:00 a.m., at Morrow Gospel Church, 755 St Anne's Road, Winnipeg, MB. Burial will take place prior to the service at Glenlawn Memorial Gardens, with procession starting from the church at 9:00 a.m.</strong></p>
+</div>
+<p>In lieu of flowers donations may be made to <strong>Union Gospel Mission.</strong></p>
 </div></section>
       </div>
     </article>
@@ -945,7 +1023,13 @@
 
     <footer class="site-footer"><span>Dick Buhler / Recollections</span><span>Version 4 · obituary closing chapter added</span></footer>
   </main>
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close image">
+    ×
+  </button>
 
+  <img id="lightboxImage" src="" alt="">
+</div>
   <script>
     const tabs = [...document.querySelectorAll('.tab')];
     const panels = [...document.querySelectorAll('[data-panel]')];
@@ -959,6 +1043,38 @@
     document.querySelector('[data-jump]')?.addEventListener('click', () => document.querySelector('#story').scrollIntoView({ behavior: 'smooth' }));
     const initial = location.hash.replace('#','');
     if (initial && document.getElementById(initial)) activate(initial, false);
+ const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxClose = document.getElementById("lightboxClose");
+
+document.querySelectorAll(
+  ".photo-placeholder img, .folio-photo img, .hero-photo img"
+).forEach(img => {
+  img.addEventListener("click", () => {
+    lightboxImage.src = img.src;
+    lightboxImage.alt = img.alt || "";
+    lightbox.classList.add("is-open");
+  });
+});
+
+function closeLightbox() {
+  lightbox.classList.remove("is-open");
+  lightboxImage.src = "";
+}
+
+lightboxClose.addEventListener("click", closeLightbox);
+
+lightbox.addEventListener("click", event => {
+  if (event.target === lightbox || event.target === lightboxImage) {
+    closeLightbox();
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeLightbox();
+  }
+});
   </script>
 </body>
 </html>

@@ -575,6 +575,67 @@
   line-height: 1;
   cursor: pointer;
 }
+  
+    /* Mobile next-chapter navigation */
+    .mobile-next {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .mobile-next {
+        display: block;
+        width: calc(100% - 2rem);
+        margin: 0 1rem 1.5rem;
+        border: 2px solid var(--line);
+        background: var(--gold);
+        color: var(--paper);
+        padding: 1rem 1.1rem;
+        text-align: left;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      .mobile-next-label {
+        display: block;
+        margin-bottom: .35rem;
+        font-size: .7rem;
+        font-weight: 900;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        opacity: .72;
+      }
+
+      .mobile-next-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.15;
+      }
+
+      .mobile-next:hover,
+      .mobile-next:focus-visible {
+        background: var(--ink);
+        color: var(--paper);
+        outline: 0;
+      }
+
+      .mobile-next-arrow {
+        flex: 0 0 auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 1.35rem;
+      }
+    }
+
+    @media print {
+      .mobile-next {
+        display: none !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1043,6 +1104,31 @@
     document.querySelector('[data-jump]')?.addEventListener('click', () => document.querySelector('#story').scrollIntoView({ behavior: 'smooth' }));
     const initial = location.hash.replace('#','');
     if (initial && document.getElementById(initial)) activate(initial, false);
+
+    // Build mobile-only "Next Chapter" buttons from the existing tab order.
+    panels.forEach((panel, index) => {
+      const nextTab = tabs[index + 1];
+      if (!nextTab) return;
+
+      const number = nextTab.querySelector('span')?.textContent.trim() || '';
+      const title = nextTab.querySelector('b')?.textContent.trim() || 'Next Chapter';
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'mobile-next';
+      button.dataset.nextTarget = nextTab.dataset.target;
+      button.innerHTML = `
+        <span class="mobile-next-label">Next chapter ${number}</span>
+        <span class="mobile-next-title">
+          <span>${title}</span>
+          <span class="mobile-next-arrow" aria-hidden="true">→</span>
+        </span>
+      `;
+
+      button.addEventListener('click', () => activate(nextTab.dataset.target));
+      panel.appendChild(button);
+    });
+
  const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightboxImage");
 const lightboxClose = document.getElementById("lightboxClose");

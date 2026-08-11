@@ -1125,7 +1125,19 @@
         </span>
       `;
 
-      button.addEventListener('click', () => activate(nextTab.dataset.target));
+      button.addEventListener('click', () => {
+  activate(nextTab.dataset.target);
+
+  const nextPanel = document.getElementById(nextTab.dataset.target);
+  const nextText = nextPanel.querySelector('.chapter-copy');
+
+  setTimeout(() => {
+    nextText.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }, 100);
+});
       panel.appendChild(button);
     });
 

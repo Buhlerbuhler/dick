@@ -635,6 +635,23 @@
         display: none !important;
       }
     }
+    /* Photos with real images should size to the image itself */
+.folio-photo:has(img),
+.photo-placeholder:has(img),
+.hero-photo:has(img) {
+  padding: 0;
+  min-height: 0;
+  background: none;
+}
+
+/* Let image proportions determine the height */
+.folio-photo img,
+.photo-placeholder img,
+.hero-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
   </style>
 </head>

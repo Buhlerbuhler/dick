@@ -965,7 +965,7 @@ function setupAncestorPanZoom() {
   document.getElementById('resetView')?.addEventListener('click', resetAncestorView);
 }
 
-function renderAncestors(focusMode = null, focusId = null) {
+function renderAncestors(focusMode = null, focusId = null, anchorPoint = null) {
   const levels = buildPedigreeLevels();
   const maxDepth = levels.length - 1;
   const totalSlots = Math.pow(2, maxDepth);
@@ -1020,12 +1020,21 @@ function renderAncestors(focusMode = null, focusId = null) {
       return;
     }
 
-    if (focusMode === 'parents' && focusId) {
+    if (focusMode === 'anchor' && focusId && anchorPoint) {
+      const node = explorer.querySelector(`[data-node="${CSS.escape(focusId)}"]`);
+      if (node) {
+        const rect = node.getBoundingClientRect();
+        const newX = rect.left + rect.width / 2;
+        const newY = rect.top + rect.height / 2;
+        ancestorView.x += anchorPoint.x - newX;
+        ancestorView.y += anchorPoint.y - newY;
+      }
+      applyAncestorTransform();
+    } else if (focusMode === 'parents' && focusId) {
       centerParentsOf(focusId);
     } else if (focusMode === 'person' && focusId) {
       centerNode(focusId, .55);
     } else {
-      // No automatic recentering. Keep the current pan/zoom position.
       applyAncestorTransform();
     }
   });
@@ -1110,9 +1119,14 @@ function bindCards() {
   document.querySelectorAll('[data-expand]').forEach(el => {
     el.onclick = () => {
       const id = el.dataset.expand;
+      const clickedNode = el.closest('[data-node]');
+      const clickedRect = clickedNode?.getBoundingClientRect();
+      const anchorPoint = clickedRect ? {
+        x: clickedRect.left + clickedRect.width / 2,
+        y: clickedRect.top + clickedRect.height / 2
+      } : null;
 
       if (openBranches.has(id)) {
-        // Also collapse anything above this branch.
         const collapseBranch = targetId => {
           openBranches.delete(targetId);
           (PEOPLE[targetId]?.parents || []).forEach(collapseBranch);
@@ -1122,8 +1136,7 @@ function bindCards() {
         openBranches.add(id);
       }
 
-      // Preserve the current pan/zoom position exactly.
-      renderAncestors();
+      renderAncestors('anchor', id, anchorPoint);
     };
   });
 }
@@ -1171,8 +1184,16 @@ function showPerson(id){
   `;
 
   document.querySelector('[data-drawer-expand]')?.addEventListener('click',()=>{
+    const explorer = document.getElementById('ancestorExplorer');
+    const node = explorer?.querySelector(`[data-node="${CSS.escape(id)}"]`);
+    const rect = node?.getBoundingClientRect();
+    const anchorPoint = rect ? {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    } : null;
+
     openBranches.add(id);
-    renderAncestors();
+    renderAncestors(anchorPoint ? 'anchor' : null, id, anchorPoint);
     closeDrawer();
     document.querySelector('[data-view="ancestors"]').click();
   });

@@ -572,6 +572,40 @@ footer{border-top:2px solid var(--line);padding:1rem;text-transform:uppercase;fo
   outline: 0;
 }
 
+
+/* Embedded inside the Dick Buhler memoir */
+body.is-embedded {
+  background: var(--paper);
+}
+
+body.is-embedded .shell {
+  width: 100%;
+  border: 0;
+  box-shadow: none;
+  min-height: 0;
+}
+
+body.is-embedded header,
+body.is-embedded .centerpiece,
+body.is-embedded footer {
+  display: none;
+}
+
+body.is-embedded .controls {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--paper);
+}
+
+body.is-embedded .view-head {
+  padding-top: 1rem;
+}
+
+body.is-embedded .ancestor-viewport {
+  height: min(72vh, 760px);
+}
+
 </style>
 </head>
 <body>
@@ -595,7 +629,7 @@ footer{border-top:2px solid var(--line);padding:1rem;text-transform:uppercase;fo
 </nav>
 
 <section class="view is-active" id="ancestors">
-  <div class="view-head"><h2>Ancestors</h2><p>Three generations are shown first. Use “show parents” under any person to open an earlier branch. Click a person for dates, places and marriage information.</p></div>
+  <div class="view-head"><h2>Ancestors</h2><p>Use “show parents” under any person to open an earlier branch. Click a person for dates, places and marriage information.</p></div>
   <div class="ancestor-wrap">
     <div class="ancestor-viewport" id="ancestorViewport">
       <button type="button" class="reset-view-button" id="resetView">Reset View</button>
@@ -1084,15 +1118,12 @@ function bindCards() {
           (PEOPLE[targetId]?.parents || []).forEach(collapseBranch);
         };
         collapseBranch(id);
-
-        // Stay with the person whose branch was collapsed.
-        renderAncestors('person', id);
       } else {
         openBranches.add(id);
-
-        // Move toward the newly revealed parent pair rather than jumping to Dick.
-        renderAncestors('parents', id);
       }
+
+      // Preserve the current pan/zoom position exactly.
+      renderAncestors();
     };
   });
 }
@@ -1141,7 +1172,7 @@ function showPerson(id){
 
   document.querySelector('[data-drawer-expand]')?.addEventListener('click',()=>{
     openBranches.add(id);
-    renderAncestors('parents', id);
+    renderAncestors();
     closeDrawer();
     document.querySelector('[data-view="ancestors"]').click();
   });
@@ -1240,5 +1271,12 @@ renderBuhler();
 renderDesc();
 setupLineageDragScroll();
 </script>
+
+<script>
+  if (new URLSearchParams(window.location.search).get('embedded') === '1') {
+    document.body.classList.add('is-embedded');
+  }
+</script>
+
 </body>
 </html>

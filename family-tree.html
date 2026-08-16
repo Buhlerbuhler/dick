@@ -624,8 +624,7 @@ body.is-embedded .ancestor-viewport {
 
 <nav class="controls" aria-label="Tree views">
   <button class="is-active" data-view="ancestors">Ancestors</button>
-  <button data-view="buhler">Buhler Line</button>
-  <button data-view="descendants">Descendants</button>
+<button data-view="descendants">Descendants</button>
 </nav>
 
 <section class="view is-active" id="ancestors">
@@ -637,12 +636,6 @@ body.is-embedded .ancestor-viewport {
     </div>
   </div>
 </section>
-
-<section class="view" id="buhler">
-  <div class="view-head"><h2>The Buhler Line</h2><p>The direct paternal line from Dick backward through the Buhler surname, showing the family’s movement from Manitoba to South Russia and back into Prussian records.</p></div>
-  <div class="line-wrap"><div class="line-track" id="buhlerTrack"></div></div>
-</section>
-
 <section class="view" id="descendants">
   <div class="view-head"><h2>Descendants</h2><p>Dick and Esther’s children, grandchildren and great-grandchildren. Dates for living family members are intentionally left out.</p></div>
   <div class="desc-wrap" id="descendantTree"></div>
@@ -1368,9 +1361,7 @@ function setupLineageDragScroll() {
 }
 
 renderAncestors();
-renderBuhler();
 renderDesc();
-setupLineageDragScroll();
 </script>
 
 <script>

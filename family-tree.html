@@ -624,7 +624,8 @@ body.is-embedded .ancestor-viewport {
 
 <nav class="controls" aria-label="Tree views">
   <button class="is-active" data-view="ancestors">Ancestors</button>
-<button data-view="descendants">Descendants</button>
+  <button data-view="buhler">Buhler Line</button>
+  <button data-view="descendants">Descendants</button>
 </nav>
 
 <section class="view is-active" id="ancestors">
@@ -636,6 +637,12 @@ body.is-embedded .ancestor-viewport {
     </div>
   </div>
 </section>
+
+<section class="view" id="buhler">
+  <div class="view-head"><h2>The Buhler Line</h2><p>The direct paternal line from Dick backward through the Buhler surname, showing the family’s movement from Manitoba to South Russia and back into Prussian records.</p></div>
+  <div class="line-wrap"><div class="line-track" id="buhlerTrack"></div></div>
+</section>
+
 <section class="view" id="descendants">
   <div class="view-head"><h2>Descendants</h2><p>Dick and Esther’s children, grandchildren and great-grandchildren. Dates for living family members are intentionally left out.</p></div>
   <div class="desc-wrap" id="descendantTree"></div>
@@ -1172,29 +1179,23 @@ function eventFacts(label, events, formatter) {
 
 function spouseFacts(spouses) {
   return (spouses || []).map(spouse => {
+    let out = simpleFact('Spouse', [spouse.name]);
+
     const marriages = spouse.marriages || [];
-
-    // If a spouse is recorded but no marriage event exists,
-    // still show the relationship under the single "Marriage" heading.
-    if (!marriages.length) {
-      return spouse.name ? simpleFact('Marriage', [`With ${spouse.name}`]) : '';
-    }
-
-    return marriages.map((m, index) => {
+    marriages.forEach((m, index) => {
       const lines = [];
       if (spouse.name) lines.push(`With ${spouse.name}`);
       if (m.date) lines.push(m.date);
       if (m.place) lines.push(m.place);
       if (m.note) lines.push(m.note);
 
-      if (!lines.length) return '';
+      if (lines.length) {
+        const label = marriages.length > 1 ? `Marriage record ${index + 1}` : 'Marriage';
+        out += simpleFact(label, lines);
+      }
+    });
 
-      const label = marriages.length > 1
-        ? `Marriage record ${index + 1}`
-        : 'Marriage';
-
-      return simpleFact(label, lines);
-    }).join('');
+    return out;
   }).join('');
 }
 
@@ -1361,7 +1362,9 @@ function setupLineageDragScroll() {
 }
 
 renderAncestors();
+renderBuhler();
 renderDesc();
+setupLineageDragScroll();
 </script>
 
 <script>
